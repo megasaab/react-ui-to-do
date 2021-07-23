@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+ frontend:
+  build: ./
+  container_name: frontend_megasaab
+  ports: 
+    - "3000:3000"
+  command: serve -s build -l 3000
+  restart: unless-stopped
