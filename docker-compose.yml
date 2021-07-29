@@ -8,3 +8,15 @@ services:
     - "3000:3000"
   command: serve -s build -l 3000
   restart: unless-stopped
+  environment:
+    VIRTUAL_HOST: frontend.megasaab98.com
+    VIRTUAL_PORT: 3000
+    LETSENCRYPT_HOST: frontend.megasaab98.com
+    LETSENCRYPT_EMAIL: azhg.sabyrzhan@gmail.com
+  networks:
+    - https
+
+networks:
+  https:
+    external:
+      name: https_network
