@@ -1,4 +1,5 @@
 import LoginForm from "./components/LoginForm";
+import MainMenu from "./components/MainMenu";
 import { useEffect, useContext } from 'react';
 import { Context } from ".";
 import { observer } from "mobx-react-lite";
@@ -12,10 +13,15 @@ function App() {
     }
   },[]);
 
+  if (!store.isAuth) {
+    return (
+      <LoginForm/>
+    )
+  }
+
   return (
     <div>
-      <h1>{store.isAuth ? "Auth" + store.user.email : 'You need to auth'}</h1> 
-      <LoginForm />
+      <MainMenu/> 
     </div>
   );
 }
