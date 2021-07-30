@@ -18,7 +18,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { Store } from 'tough-cookie';
 import { observer } from "mobx-react-lite";
 import { Context } from '..';
 
@@ -100,6 +99,12 @@ const MainMenu = () => {
         setOpen(false);
     };
 
+    const logout = () => {
+        localStorage.removeItem('token');
+        store.setAuth(false);
+        store.setUser({});
+    };
+
 
     return (
         <div className={classes.root}>
@@ -159,7 +164,7 @@ const MainMenu = () => {
                 </List>
                 <Divider />
                 <List>
-                    <ListItem button onClick={() => store.logout()}>
+                    <ListItem button onClick={logout}>
                         <ListItemIcon>
                             <ExitToAppIcon />
                         </ListItemIcon>
