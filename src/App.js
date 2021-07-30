@@ -4,6 +4,7 @@ import { useEffect, useContext } from 'react';
 import { Context } from ".";
 import { observer } from "mobx-react-lite";
 import LoadingBar from "./components/assets/LoadingBar";
+import Toaster from "./components/assets/Snackbar";
 
 function App() {
   const { store } = useContext(Context);
@@ -26,6 +27,7 @@ function App() {
       <LoginForm />
     )
   }
+
 
   return (
     <div>
