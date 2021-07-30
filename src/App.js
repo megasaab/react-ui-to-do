@@ -6,30 +6,30 @@ import { observer } from "mobx-react-lite";
 import LoadingBar from "./components/assets/LoadingBar";
 
 function App() {
-  const {store} = useContext(Context);
+  const { store } = useContext(Context);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
       store.checkAuth();
     }
-  },[]);
+  }, []);
 
   if (store.isLoading) {
-      return (
-        <LoadingBar/>
-      )
+    return (
+      <LoadingBar />
+    )
   }
 
 
   if (!store.isAuth) {
     return (
-      <LoginForm/>
+      <LoginForm />
     )
   }
 
   return (
     <div>
-      <MainMenu/> 
+      <MainMenu />
     </div>
   );
 }

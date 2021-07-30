@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useState, useContext} from 'react';
+import { useState, useContext } from 'react';
 import { Context } from '..';
 
 function Copyright() {
@@ -48,11 +48,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+const LoginForm = () => {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {store} = useContext(Context);
+  const { store } = useContext(Context);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -106,11 +106,6 @@ export default function SignIn() {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
               <Link href="#" variant="body2">
                 {"Don't have an account? Sign Up"}
@@ -125,3 +120,5 @@ export default function SignIn() {
     </Container>
   );
 }
+
+export default LoginForm;

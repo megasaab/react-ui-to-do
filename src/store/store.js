@@ -21,7 +21,7 @@ export default class Store {
     }
 
     setLoading(bool) {
-        this.isAuth = bool;
+        this.isLoading = bool;
     }
 
     async login(email, password) {
@@ -29,7 +29,6 @@ export default class Store {
             const res = await AuthService.login(email, password);
             console.log(res.data);
             localStorage.setItem('token', res.data.accessToken);
-            document.cookie = `refreshToken=${res.data.refreshToken}`;
             this.setAuth(true);
             this.setUser(res.data.user);
         } catch (error) {
@@ -66,13 +65,11 @@ export default class Store {
             const res = await axios.post(`${BASE_API_URL}/refresh`, {refreshToken: refreshTokenFromCookie});
             localStorage.setItem('token', res.data.accessToken);
             this.setAuth(true);
-            console.log(this.isAuth)
             this.setUser(res.data.user);
         } catch (error) {
             console.log(error?.response?.data?.message);
         } finally {
             this.setLoading(false)
-            console.log(this.isAuth)
         }
     }
 
