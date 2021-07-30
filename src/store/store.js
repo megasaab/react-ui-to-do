@@ -27,7 +27,6 @@ export default class Store {
     async login(email, password) {
         try {
             const res = await AuthService.login(email, password);
-            console.log(res.data);
             localStorage.setItem('token', res.data.accessToken);
             document.cookie = `refreshToken=${res.data.refreshToken}`;
             this.setAuth(true);
@@ -50,7 +49,8 @@ export default class Store {
 
     async logout() {
         try {
-            await AuthService.logout();
+            const refreshTokenFromCookie = this.getCookie('refreshToken');
+            await AuthService.logout(refreshTokenFromCookie );
             localStorage.removeItem('token');
             this.setAuth(false);
             this.setUser({});
