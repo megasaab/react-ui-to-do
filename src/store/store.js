@@ -29,6 +29,7 @@ export default class Store {
             const res = await AuthService.login(email, password);
             console.log(res.data);
             localStorage.setItem('token', res.data.accessToken);
+            document.cookie = `refreshToken=${res.data.refreshToken}`;
             this.setAuth(true);
             this.setUser(res.data.user);
         } catch (error) {
