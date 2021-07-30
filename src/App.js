@@ -3,6 +3,7 @@ import MainMenu from "./components/MainMenu";
 import { useEffect, useContext } from 'react';
 import { Context } from ".";
 import { observer } from "mobx-react-lite";
+import LoadingBar from "./components/assets/LoadingBar";
 
 function App() {
   const {store} = useContext(Context);
@@ -12,6 +13,13 @@ function App() {
       store.checkAuth();
     }
   },[]);
+
+  if (store.isLoading) {
+      return (
+        <LoadingBar/>
+      )
+  }
+
 
   if (!store.isAuth) {
     return (
