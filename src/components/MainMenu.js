@@ -206,13 +206,11 @@ const MainMenu = () => {
                     <Switch>
                         <Route path="/user-profile">
                             <UserProfile />
-                            <Route path='*' exact={true}  component={NotFound}/>
                         </Route>
                         <Route path="/todos">
                             <ToDoList />
-                            <Route path='*' exact={true}  component={NotFound}/>
                         </Route>
-                        <Route path='*' exact={true}  component={NotFound}/>
+                        <Route component={NotFound}/>
                     </Switch>
                 </main>
             </div>
