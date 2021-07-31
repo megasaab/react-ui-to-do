@@ -34,6 +34,7 @@ import {
 } from "react-router-dom";
 import UserProfile from './UserProfile';
 import NotFound from './assets/NotFound';
+import CreateToDo from './CreateTodo';
 
 const drawerWidth = 240;
 
@@ -247,7 +248,10 @@ const MainMenu = () => {
                             <UserProfile />
                         </Route>
                         <Route path="/todos">
-                            <ToDoList user={store.user} />
+                            <ToDoList todoUser={store.user} />
+                        </Route>
+                        <Route path="/create-todo">
+                            <CreateToDo />
                         </Route>
                         {/* TODO <Route component={NotFound} /> */}
                         <Redirect to="/todos" />

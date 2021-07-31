@@ -6,6 +6,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import ListIcon from '@material-ui/icons/List';
+import { IconButton } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,6 +26,20 @@ const useStyles = makeStyles((theme) => ({
 
     listIcon: {
         marginRight: '1rem'
+    },
+
+    addButton: {
+        display: 'flex',
+        marginLeft: 'auto'
+    },
+
+    link: {
+        textDecoration: 'none'
+    },
+
+    toDoList: {
+        display: 'flex',
+        alignItems: 'center'
     }
 }));
 
@@ -33,15 +50,20 @@ const getCreatedDate = (date) => {
     return `${monthNames[date.getMonth()]} ${date.getDay()}, ${date.getFullYear()}`
 }
 
-const ToDoList = ({ user }) => {
+const ToDoList = ({ todoUser }) => {
     const classes = useStyles();
-    const todos = user?.todos;
+    const todos = todoUser?.todos;
 
     return (
         <div>
-            {todos.length > 0 ? todos?.map(item => {
+            <Link className={classes.link} to="/create-todo">
+                <IconButton color="primary" className={classes.addButton}>
+                    <AddIcon />
+                </IconButton>
+            </Link>
+            {todos?.length > 0 ? todos?.map((item, index)=> {
                 return (
-                    <div>
+                    <div key={index} className={classes.ToDoList}>
                         <List className={classes.root}>
                             <ListItem>
                                 <div className={classes.items}>
