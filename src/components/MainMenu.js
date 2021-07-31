@@ -25,9 +25,10 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link,
 } from "react-router-dom";
 import UserProfile from './UserProfile';
+import NotFound from './assets/NotFound';
 
 const drawerWidth = 240;
 
@@ -205,10 +206,13 @@ const MainMenu = () => {
                     <Switch>
                         <Route path="/user-profile">
                             <UserProfile />
+                            <Route path='*' exact={true}  component={NotFound}/>
                         </Route>
                         <Route path="/todos">
                             <ToDoList />
+                            <Route path='*' exact={true}  component={NotFound}/>
                         </Route>
+                        <Route path='*' exact={true}  component={NotFound}/>
                     </Switch>
                 </main>
             </div>
