@@ -19,6 +19,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { observer } from "mobx-react-lite";
 import { Context } from '..';
 import Avatar from '@material-ui/core/Avatar';
+import ToDoList from './TodoList';
 
 const drawerWidth = 240;
 
@@ -177,7 +178,8 @@ const MainMenu = () => {
                 </List>
             </Drawer>
             <main className={classes.content}>
-                <div className={classes.toolbar} />
+                <div className={classes.toolbar}/>
+                <ToDoList/>
             </main>
         </div>
     );
