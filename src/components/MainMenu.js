@@ -18,7 +18,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { observer } from "mobx-react-lite";
 import { Context } from '..';
-import Toaster from './assets/Toaster';
 import Avatar from '@material-ui/core/Avatar';
 
 const drawerWidth = 240;

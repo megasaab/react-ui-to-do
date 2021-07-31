@@ -75,9 +75,16 @@ const LoginForm = () => {
   };
 
   const createNewUser = async (email, password) => {
-    store.registration(email, password).then((res) => {
-      console.log(res)
-    })
+    const res = await store.registration(email, password)
+    if (res.status !== SUCCESS_STATUS) {
+      setToasterStatus(ERROR_TOASTER_STATUS);
+      setToasterMessage(res?.response?.data?.message);
+      setToaster(true);
+    }
+
+    setTimeout(() => {
+      setToaster(false);
+    }, 3000)
   }
 
   if (!registration) {
@@ -151,6 +158,7 @@ const LoginForm = () => {
   } else {
     return (
       <Container component="main" maxWidth="xs">
+        {isToaster ? <Toaster message={toasterMessage} status={toasterStatus} /> : ''}
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
