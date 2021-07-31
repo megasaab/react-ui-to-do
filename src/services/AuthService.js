@@ -1,4 +1,3 @@
-import axios from "axios";
 import $api from "../http/https";
 
 export default class AuthService {

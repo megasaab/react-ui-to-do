@@ -21,6 +21,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { observer } from "mobx-react-lite";
 import { Context } from '..';
 import Toaster from './assets/Toaster';
+import Avatar from '@material-ui/core/Avatar';
 
 const drawerWidth = 240;
 
@@ -83,6 +84,15 @@ const useStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
+    },
+    flexAvatar: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around'
+    },
+    small: {
+        width: theme.spacing(4),
+        height: theme.spacing(4),
     },
 }));
 
@@ -147,12 +157,15 @@ const MainMenu = () => {
                 }}
             >
                 <div className={classes.toolbar}>
-                    <div>
+                    <div className={classes.flexAvatar}>
+                        <IconButton>
+                            <Avatar className={classes.small} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                        </IconButton>
                         {store.user.email}
+                        <IconButton onClick={handleDrawerClose}>
+                            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                        </IconButton>
                     </div>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                    </IconButton>
                 </div>
                 <Divider />
                 <List>
@@ -178,7 +191,7 @@ const MainMenu = () => {
 
             </main>
             {
-                store.success ? <Toaster message={store.message}/> : ''
+                store.success ? <Toaster message={store.message} /> : ''
             }
         </div>
     );
