@@ -24,6 +24,7 @@ import ListIcon from '@material-ui/icons/List';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import Box from '@material-ui/core/Box';
 import {
     BrowserRouter as Router,
     Switch,
@@ -136,6 +137,18 @@ const MainMenu = () => {
         store.setUser({});
     };
 
+    const Copyright = () => {
+        return (
+            <Typography variant="body2" color="textSecondary" align="center">
+                {' © '}
+                created by megasaab
+                {' '}
+                {new Date().getFullYear()}
+                {'.'}
+            </Typography>
+        );
+    }
+
     return (
         <Router>
             <div className={classes.root}>
@@ -234,11 +247,14 @@ const MainMenu = () => {
                             <UserProfile />
                         </Route>
                         <Route path="/todos">
-                            <ToDoList user={store.user}/>
+                            <ToDoList user={store.user} />
                         </Route>
                         {/* TODO <Route component={NotFound} /> */}
                         <Redirect to="/todos" />
                     </Switch>
+                    <Box mt={8}>
+                        <Copyright />
+                    </Box>
                 </main>
             </div>
         </Router>
