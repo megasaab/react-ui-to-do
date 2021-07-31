@@ -20,6 +20,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { observer } from "mobx-react-lite";
 import { Context } from '..';
+import Toaster from './assets/Toaster';
 
 const drawerWidth = 240;
 
@@ -176,6 +177,9 @@ const MainMenu = () => {
                 <div className={classes.toolbar} />
 
             </main>
+            {
+                store.success ? <Toaster message={store.message}/> : ''
+            }
         </div>
     );
 }
