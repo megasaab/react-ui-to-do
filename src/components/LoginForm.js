@@ -14,9 +14,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useState, useContext } from 'react';
 import { Context } from '..';
-import { SUCCESS_STATUS } from './constatns/http-status';
+import { SUCCESS_STATUS } from './constants/http-status';
 import Toaster from './assets/Toaster';
-import { ERROR_TOASTER_STATUS } from './constatns/toaster-status';
+import { ERROR_TOASTER_STATUS } from './constants/toaster-status';
 
 function Copyright() {
   return (

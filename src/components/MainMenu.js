@@ -20,6 +20,14 @@ import { observer } from "mobx-react-lite";
 import { Context } from '..';
 import Avatar from '@material-ui/core/Avatar';
 import ToDoList from './TodoList';
+import ListIcon from '@material-ui/icons/List';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import UserProfile from './UserProfile';
 
 const drawerWidth = 240;
 
@@ -92,6 +100,11 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(4),
         height: theme.spacing(4),
     },
+
+    link: {
+        textDecoration: 'none',
+        color: 'black'
+    }
 }));
 
 const MainMenu = () => {
@@ -116,72 +129,90 @@ const MainMenu = () => {
 
 
     return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton, {
-                            [classes.hide]: open,
-                        })}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        Mini variant drawer
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open,
-                    [classes.drawerClose]: !open,
-                })}
-                classes={{
-                    paper: clsx({
+        <Router>
+            <div className={classes.root}>
+                <CssBaseline />
+                <AppBar
+                    position="fixed"
+                    className={clsx(classes.appBar, {
+                        [classes.appBarShift]: open,
+                    })}
+                >
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            className={clsx(classes.menuButton, {
+                                [classes.hide]: open,
+                            })}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" noWrap>
+                            Mini variant drawer
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    variant="permanent"
+                    className={clsx(classes.drawer, {
                         [classes.drawerOpen]: open,
                         [classes.drawerClose]: !open,
-                    }),
-                }}
-            >
-                <div className={classes.toolbar}>
-                    <div className={classes.flexAvatar}>
-                        <IconButton>
-                            <Avatar className={classes.small} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                        </IconButton>
-                        {store.user.email}
-                        <IconButton onClick={handleDrawerClose}>
-                            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                        </IconButton>
+                    })}
+                    classes={{
+                        paper: clsx({
+                            [classes.drawerOpen]: open,
+                            [classes.drawerClose]: !open,
+                        }),
+                    }}
+                >
+                    <div className={classes.toolbar}>
+                        <div className={classes.flexAvatar}>
+                            <Link className={classes.link} to="/user-profile">
+                                <IconButton>
+                                    <Avatar className={classes.small} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                </IconButton>
+                            </Link>
+                            {store.user.email}
+                            <IconButton onClick={handleDrawerClose}>
+                                {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                            </IconButton>
+                        </div>
                     </div>
-                </div>
-                <Divider />
-                {/* TODO SOME REFS */}
-                <Divider />
-                <List>
-                    <ListItem button onClick={logout}>
-                        <ListItemIcon>
-                            <ExitToAppIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={'Exit'} />
-                    </ListItem>
-                </List>
-            </Drawer>
-            <main className={classes.content}>
-                <div className={classes.toolbar}/>
-                <ToDoList/>
-            </main>
-        </div>
+                    <Divider />
+                    <Link className={classes.link} to="/todos">
+                        <ListItem button>
+                            <ListItemIcon>
+                                <ListIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={'Todos'} />
+                        </ListItem>
+                    </Link>
+                    <Divider />
+                    <List>
+                        <ListItem button onClick={logout}>
+                            <ListItemIcon>
+                                <ExitToAppIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={'Exit'} />
+                        </ListItem>
+                    </List>
+                </Drawer>
+                <main className={classes.content}>
+                    <div className={classes.toolbar} />
+                    <Switch>
+                        <Route path="/user-profile">
+                            <UserProfile />
+                        </Route>
+                        <Route path="/todos">
+                            <ToDoList />
+                        </Route>
+                    </Switch>
+                </main>
+            </div>
+        </Router>
     );
 }
 
