@@ -21,6 +21,9 @@ import { Context } from '..';
 import Avatar from '@material-ui/core/Avatar';
 import ToDoList from './TodoList';
 import ListIcon from '@material-ui/icons/List';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import {
     BrowserRouter as Router,
     Switch,
@@ -105,7 +108,11 @@ const useStyles = makeStyles((theme) => ({
     link: {
         textDecoration: 'none',
         color: 'black'
+    },
+    spaceBetween: {
+        justifyContent: 'space-between'
     }
+
 }));
 
 const MainMenu = () => {
@@ -128,7 +135,6 @@ const MainMenu = () => {
         store.setUser({});
     };
 
-
     return (
         <Router>
             <div className={classes.root}>
@@ -139,7 +145,7 @@ const MainMenu = () => {
                         [classes.appBarShift]: open,
                     })}
                 >
-                    <Toolbar>
+                    <Toolbar className={classes.spaceBetween}>
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
@@ -152,8 +158,27 @@ const MainMenu = () => {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap>
-                            Mini variant drawer
                         </Typography>
+                        <div>
+                            <IconButton
+                                onClick={() => window.open("https://github.com/megasaab", '_blank')}
+                                color="inherit"
+                            >
+                                <GitHubIcon />
+                            </IconButton>
+                            <IconButton
+                                onClick={() => window.open("https://www.instagram.com/_megasaab_/", '_blank')}
+                                color="inherit"
+                            >
+                                <InstagramIcon />
+                            </IconButton>
+                            <IconButton
+                                onClick={() => window.open("https://www.linkedin.com/in/sabyrzhan-azhigali-585615173/", '_blank')}
+                                color="inherit"
+                            >
+                                <LinkedInIcon />
+                            </IconButton>
+                        </div>
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -210,7 +235,7 @@ const MainMenu = () => {
                         <Route path="/todos">
                             <ToDoList />
                         </Route>
-                        <Route component={NotFound}/>
+                        <Route component={NotFound} />
                     </Switch>
                 </main>
             </div>
