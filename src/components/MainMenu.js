@@ -29,6 +29,7 @@ import {
     Switch,
     Route,
     Link,
+    Redirect,
 } from "react-router-dom";
 import UserProfile from './UserProfile';
 import NotFound from './assets/NotFound';
@@ -233,9 +234,10 @@ const MainMenu = () => {
                             <UserProfile />
                         </Route>
                         <Route path="/todos">
-                            <ToDoList />
+                            <ToDoList user={store.user}/>
                         </Route>
-                        <Route component={NotFound} />
+                        {/* TODO <Route component={NotFound} /> */}
+                        <Redirect to="/todos" />
                     </Switch>
                 </main>
             </div>
