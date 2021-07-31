@@ -23,7 +23,9 @@ function App() {
 
   if (!store.isAuth) {
     return (
-      <LoginForm />
+      <div>
+        <LoginForm />
+      </div>
     )
   }
 

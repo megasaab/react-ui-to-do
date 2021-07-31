@@ -14,6 +14,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useState, useContext } from 'react';
 import { Context } from '..';
+import { SUCCESS_STATUS } from './constatns/http-status';
+import Toaster from './assets/Toaster';
+import { ERROR_TOASTER_STATUS } from './constatns/toaster-status';
 
 function Copyright() {
   return (
@@ -51,15 +54,37 @@ const useStyles = makeStyles((theme) => ({
 const LoginForm = () => {
   const classes = useStyles();
   const [email, setEmail] = useState('');
+  const [toasterStatus, setToasterStatus] = useState('success');
+  const [isToaster, setToaster] = useState(false);
   const [password, setPassword] = useState('');
+  const [toasterMessage, setToasterMessage] = useState('');
   const [registration, setRegistration] = useState(false);
   const { store } = useContext(Context);
+
+  const login = async (email, password) => {
+    const res = await store.login(email, password)
+    if (res.status !== SUCCESS_STATUS) {
+      setToasterStatus(ERROR_TOASTER_STATUS);
+      setToasterMessage(res?.response?.data?.message);
+      setToaster(true);
+    }
+
+    setTimeout(() => {
+      setToaster(false);
+    }, 3000)
+  };
+
+  const createNewUser = async (email, password) => {
+    store.registration(email, password).then((res) => {
+      console.log(res)
+    })
+  }
 
   if (!registration) {
     return (
       <div>
         <Container component="main" maxWidth="xs">
-          <CssBaseline />
+          {isToaster ? <Toaster message={toasterMessage} status={toasterStatus} /> : ''}
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
@@ -101,7 +126,7 @@ const LoginForm = () => {
               <Button
                 type="button"
                 fullWidth
-                onClick={() => store.login(email, password)}
+                onClick={() => login(email, password)}
                 variant="contained"
                 color="primary"
                 className={classes.submit}
@@ -168,7 +193,7 @@ const LoginForm = () => {
             <Button
               type="button"
               fullWidth
-              onClick={() => store.registration(email, password)}
+              onClick={() => createNewUser(email, password)}
               variant="contained"
               color="primary"
               className={classes.submit}

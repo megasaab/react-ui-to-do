@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,8 +15,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { observer } from "mobx-react-lite";
 import { Context } from '..';
@@ -99,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
 const MainMenu = () => {
     const classes = useStyles();
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const { store } = useContext(Context);
 
     const handleDrawerOpen = () => {
@@ -168,14 +166,7 @@ const MainMenu = () => {
                     </div>
                 </div>
                 <Divider />
-                <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
+                {/* TODO SOME REFS */}
                 <Divider />
                 <List>
                     <ListItem button onClick={logout}>
@@ -188,11 +179,7 @@ const MainMenu = () => {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-
             </main>
-            {
-                store.success ? <Toaster message={store.message} /> : ''
-            }
         </div>
     );
 }

@@ -7,7 +7,7 @@ const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const Toaster = ({ message }) => {
+const Toaster = ({ message, status }) => {
   const [open, setOpen] = useState(true);
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -23,7 +23,7 @@ const Toaster = ({ message }) => {
       autoHideDuration={3000} onClose={handleClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       TransitionComponent={Fade} >
-      <Alert onClose={handleClose} severity="success">
+      <Alert onClose={handleClose} severity={status}>
         {message}
       </Alert>
     </Snackbar>
