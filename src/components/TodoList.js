@@ -4,7 +4,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListIcon from '@material-ui/icons/List';
-import { IconButton } from '@material-ui/core';
+import { Button, IconButton, MenuItem } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -16,6 +16,8 @@ import { TextField } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import CancelIcon from '@material-ui/icons/Cancel';
 import Toaster from './assets/Toaster';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Menu from '@material-ui/core/Menu';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,6 +54,14 @@ const useStyles = makeStyles((theme) => ({
     toDoList: {
         display: 'flex',
         alignItems: 'center'
+    },
+
+    flexButton: {
+        display: 'flex'
+    },
+
+    menuItems: {
+        display: 'flex',
     }
 }));
 
@@ -81,11 +91,27 @@ const ToDoList = () => {
     const [isEdit, setEdit] = useState(false);
     const [name, setName] = useState('');
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     useEffect(() => {
         setTodos(store.user.todos);
+
+        return () => {
+            store.setToaster(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [store.user.todos]);
 
     const deleteTodo = async (todo) => {
+        handleClose();
         const target = Object.assign({}, todo);
         setLoading(true);
         try {
@@ -99,7 +125,7 @@ const ToDoList = () => {
     };
 
     const editTodo = async (todo) => {
-        console.log(name)
+        handleClose();
         const target = Object.assign({}, todo);
         setLoading(true);
         target.name = name;
@@ -116,7 +142,7 @@ const ToDoList = () => {
 
     return (
         <div>
-            {store.isToaset ? <Toaster message={`${store.user.todos[todos?.length - 1].name} todo was created`} status={'success'} /> : ''}
+            {store.isToaset ? <Toaster message={`${store?.user?.todos[todos?.length - 1]?.name} todo was created`} status={'success'} /> : ''}
             {loading ? <LoadingBar /> : ''}
             <div className={classes.title}>
                 <h1>Your Do List</h1>
@@ -142,26 +168,45 @@ const ToDoList = () => {
                                     }
                                 </div>
                             </ListItem>
-                            {!isEdit ?
-                                <IconButton onClick={() => setEdit(true)}>
-                                    <EditIcon color="primary" />
-                                </IconButton> :
-
-                                <IconButton onClick={() => editTodo(item)} disabled={name === ''}>
-                                    <CheckIcon />
-                                </IconButton>
-                            }
                             {
                                 !isEdit ?
-                                    <IconButton onClick={() => deleteTodo(item)}>
-                                        <DeleteIcon color="secondary" />
-                                    </IconButton> :
+                                    '' :
+                                    <div className={classes.flexButton}>
+                                        <IconButton onClick={() => editTodo(item)} disabled={name === ''}>
+                                            <CheckIcon />
+                                        </IconButton>
+                                        <IconButton onClick={() => setEdit(false)}>
+                                            <CancelIcon />
+                                        </IconButton>
+                                    </div>
 
-                                    <IconButton onClick={() => setEdit(false)}>
-                                        <CancelIcon />
-                                    </IconButton>
                             }
+                            <div>
+                                <IconButton aria-controls="list-menu" aria-haspopup="true" onClick={handleClick}>
+                                    <MoreVertIcon />
+                                </IconButton>
 
+                                <Menu
+                                    id="list-menu"
+                                    anchorEl={anchorEl}
+                                    keepMounted
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                >
+                                    <MenuItem onClick={() => setEdit(true)} className={classes.menuItems}>
+                                        <EditIcon color="primary" />
+                                        Edit
+                                    </MenuItem>
+                                    <MenuItem onClick={() => deleteTodo(item)} className={classes.menuItems}>
+                                        <DeleteIcon color="secondary" />
+                                        Delete
+                                    </MenuItem>
+                                    <MenuItem onClick={handleClose}>
+                                        <CancelIcon />
+                                        Close
+                                    </MenuItem>
+                                </Menu>
+                            </div>
                         </List>
                     </div>
                 )
