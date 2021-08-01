@@ -33,7 +33,6 @@ import {
     Redirect,
 } from "react-router-dom";
 import UserProfile from './UserProfile';
-import NotFound from './assets/NotFound';
 import CreateToDo from './CreateTodo';
 
 const drawerWidth = 240;
@@ -248,7 +247,7 @@ const MainMenu = () => {
                             <UserProfile />
                         </Route>
                         <Route path="/todos">
-                            <ToDoList  />
+                            <ToDoList/>
                         </Route>
                         <Route path="/create-todo">
                             <CreateToDo />

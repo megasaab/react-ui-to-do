@@ -13,6 +13,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ToDoService from '../services/ToDoService';
 import { Context } from '..';
 import LoadingBar from './assets/LoadingBar';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
     addButton: {
         display: 'flex',
-        marginLeft: 'auto'
+        float: 'right',
     },
 
     link: {
@@ -107,6 +108,9 @@ const ToDoList = () => {
                                              edited: ${getCreatedDate(new Date(item?.updatedAt))}`} />
                                 </div>
                             </ListItem>
+                              <IconButton>
+                                <EditIcon color="primary" />
+                            </IconButton>
                             <IconButton onClick={() => deleteTodo(item)}>
                                 <DeleteIcon color="secondary" />
                             </IconButton>
