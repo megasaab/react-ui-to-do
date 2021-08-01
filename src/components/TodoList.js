@@ -58,7 +58,18 @@ const getCreatedDate = (date) => {
     const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
-    return `${monthNames[date.getMonth()]} ${date.getDay()}, ${date.getFullYear()}`
+
+    const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday",
+        "Thursday", "Friday", "Saturday"];
+
+    const month = date.getUTCMonth() + 1; //months from 1-12
+    const day = date.getUTCDate();
+    const year = date.getUTCFullYear();
+    const time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const weekDay = weekDays[date.getDay()];
+
+
+    return `${monthNames[month]} ${weekDay} ${day}, ${year}: ${time}`;
 }
 
 const ToDoList = () => {
