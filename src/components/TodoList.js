@@ -14,6 +14,8 @@ import ToDoService from '../services/ToDoService';
 import { Context } from '..';
 import LoadingBar from './assets/LoadingBar';
 import EditIcon from '@material-ui/icons/Edit';
+import { TextField } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,6 +66,9 @@ const ToDoList = () => {
     const { store } = useContext(Context);
     const [todos, setTodos] = useState(store.user.todos);
     const [loading, setLoading] = useState(false);
+    const [isEdit, setEdit] = useState(false);
+    const [name, setName] = useState('');
+
     useEffect(() => {
         setTodos(store.user.todos);
     }, [store.user.todos]);
@@ -80,6 +85,21 @@ const ToDoList = () => {
             setLoading(false);
         }
     };
+
+    const editTodo = async (todo) => {
+        const target = Object.assign({}, todo);
+        setLoading(true);
+        target.name = name;
+        try {
+            const result = await ToDoService.editTodo(target);
+            setTodos(result?.data?.todos);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+            setEdit(false);
+        }
+    }
 
     return (
         <div>
@@ -103,17 +123,26 @@ const ToDoList = () => {
                                         </ListItemAvatar>
                                         :
                                         <ListIcon className={classes.listIcon} />}
-                                    <ListItemText
+                                    {!isEdit ? <ListItemText
                                         primary={item?.name}
                                         secondary={
                                             `created: ${getCreatedDate(new Date(item?.created_at))}
                                              -
-                                             edited: ${getCreatedDate(new Date(item?.updatedAt))}`} />
+                                             edited: ${getCreatedDate(new Date(item?.updatedAt))}`} /> :
+
+                                        <TextField autoFocus onChange={e => setName(e.target.value)} />
+                                    }
                                 </div>
                             </ListItem>
-                            <IconButton>
-                                <EditIcon color="primary" />
-                            </IconButton>
+                            {!isEdit ?
+                                <IconButton onClick={() => setEdit(true)}>
+                                    <EditIcon color="primary" />
+                                </IconButton> :
+
+                                <IconButton onClick={() => editTodo(item)}>
+                                    <CheckIcon />
+                                </IconButton>
+                            }
                             <IconButton onClick={() => deleteTodo(item)}>
                                 <DeleteIcon color="secondary" />
                             </IconButton>

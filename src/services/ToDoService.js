@@ -12,5 +12,8 @@ export default class ToDoService {
         return $api.post('/delete-todo', todo);
     }
         
+    static async editTodo(todo) {
+        return $api.post('/edit-todo', todo);
+    }
         
 }
