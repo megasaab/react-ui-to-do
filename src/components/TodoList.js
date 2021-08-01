@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import ListIcon from '@material-ui/icons/List';
 import { IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -16,6 +14,7 @@ import LoadingBar from './assets/LoadingBar';
 import EditIcon from '@material-ui/icons/Edit';
 import { TextField } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,9 +38,10 @@ const useStyles = makeStyles((theme) => ({
         marginRight: '1rem'
     },
 
-    addButton: {
+    title: {
         display: 'flex',
-        float: 'right',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
 
     link: {
@@ -98,6 +98,7 @@ const ToDoList = () => {
     };
 
     const editTodo = async (todo) => {
+        console.log(name)
         const target = Object.assign({}, todo);
         setLoading(true);
         target.name = name;
@@ -115,31 +116,25 @@ const ToDoList = () => {
     return (
         <div>
             {loading ? <LoadingBar /> : ''}
-            <Link className={classes.link} to="/create-todo">
-                <IconButton color="primary" className={classes.addButton}>
-                    <AddIcon />
-                </IconButton>
-            </Link>
+            <div className={classes.title}>
+                <h1>Your Do List</h1>
+                <Link className={classes.link} to="/create-todo">
+                    <IconButton color="primary">
+                        <AddIcon />
+                    </IconButton>
+                </Link>
+            </div>
             {todos?.length > 0 ? todos?.map((item, index) => {
                 return (
                     <div key={index} className={classes.ToDoList}>
                         <List className={classes.root}>
                             <ListItem>
                                 <div className={classes.items}>
-                                    {item?.todoIcon ?
-                                        <ListItemAvatar>
-                                            <Avatar>
-                                                {item?.todoIcon}
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        :
-                                        <ListIcon className={classes.listIcon} />}
+                                    <ListIcon className={classes.listIcon} />
                                     {!isEdit ? <ListItemText
                                         primary={item?.name}
                                         secondary={
-                                            `created: ${getCreatedDate(new Date(item?.created_at))}
-                                             -
-                                             edited: ${getCreatedDate(new Date(item?.updatedAt))}`} /> :
+                                            `created: ${getCreatedDate(new Date(item?.created_at))}`} /> :
 
                                         <TextField autoFocus onChange={e => setName(e.target.value)} />
                                     }
@@ -150,13 +145,21 @@ const ToDoList = () => {
                                     <EditIcon color="primary" />
                                 </IconButton> :
 
-                                <IconButton onClick={() => editTodo(item)}>
+                                <IconButton onClick={() => editTodo(item)} disabled={name === ''}>
                                     <CheckIcon />
                                 </IconButton>
                             }
-                            <IconButton onClick={() => deleteTodo(item)}>
-                                <DeleteIcon color="secondary" />
-                            </IconButton>
+                            {
+                                !isEdit ?
+                                    <IconButton onClick={() => deleteTodo(item)}>
+                                        <DeleteIcon color="secondary" />
+                                    </IconButton> :
+
+                                    <IconButton onClick={() => setEdit(false)}>
+                                        <CancelIcon />
+                                    </IconButton>
+                            }
+
                         </List>
                     </div>
                 )
