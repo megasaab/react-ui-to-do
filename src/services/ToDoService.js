@@ -7,5 +7,10 @@ export default class ToDoService {
             isDone: false
         })
     }
+
+    static async deleteTodo(todo) {
+        return $api.post('/delete-todo', todo);
+    }
+        
         
 }

@@ -248,7 +248,7 @@ const MainMenu = () => {
                             <UserProfile />
                         </Route>
                         <Route path="/todos">
-                            <ToDoList todoUser={store.user} />
+                            <ToDoList  />
                         </Route>
                         <Route path="/create-todo">
                             <CreateToDo />

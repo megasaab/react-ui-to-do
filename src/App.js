@@ -14,17 +14,10 @@ function App() {
     }
   }, []);
 
-  if (store.isLoading) {
-    return (
-      <LoadingBar />
-    )
-  }
-
-
   if (!store.isAuth) {
     return (
       <div>
-        <LoginForm />
+        {store.isLoading ? <LoadingBar /> :  <LoginForm />}
       </div>
     )
   }

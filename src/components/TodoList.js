@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,6 +9,10 @@ import ListIcon from '@material-ui/icons/List';
 import { IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ToDoService from '../services/ToDoService';
+import { Context } from '..';
+import LoadingBar from './assets/LoadingBar';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,7 +20,11 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 'auto',
         backgroundColor: 'lightBlue',
         borderRadius: '5px',
-        marginBottom: '1rem'
+        marginBottom: '1rem',
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingRight: '1rem'
     },
 
     items: {
@@ -50,18 +58,34 @@ const getCreatedDate = (date) => {
     return `${monthNames[date.getMonth()]} ${date.getDay()}, ${date.getFullYear()}`
 }
 
-const ToDoList = ({ todoUser }) => {
+const ToDoList = () => {
     const classes = useStyles();
-    const todos = todoUser?.todos;
+    const { store } = useContext(Context);
+    const [todos, setTodos] = useState(store.user.todos);
+    const [loading, setLoading] = useState(false);
+
+    const deleteTodo = async (todo) => {
+        const target = Object.assign({}, todo);
+        setLoading(true);
+        try {
+            const result = await ToDoService.deleteTodo(target);
+            setTodos(result?.data?.todos);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div>
+            {loading ? <LoadingBar /> : ''}
             <Link className={classes.link} to="/create-todo">
                 <IconButton color="primary" className={classes.addButton}>
                     <AddIcon />
                 </IconButton>
             </Link>
-            {todos?.length > 0 ? todos?.map((item, index)=> {
+            {todos?.length > 0 ? todos?.map((item, index) => {
                 return (
                     <div key={index} className={classes.ToDoList}>
                         <List className={classes.root}>
@@ -83,6 +107,9 @@ const ToDoList = ({ todoUser }) => {
                                              edited: ${getCreatedDate(new Date(item?.updatedAt))}`} />
                                 </div>
                             </ListItem>
+                            <IconButton onClick={() => deleteTodo(item)}>
+                                <DeleteIcon color="secondary" />
+                            </IconButton>
                         </List>
                     </div>
                 )
