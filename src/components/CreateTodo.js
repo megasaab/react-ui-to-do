@@ -20,9 +20,10 @@ const CreateToDo = () => {
 
     const createTodo = async () => {
         try {
-          const res = await ToDoService.createTodo(name);
-          store.user.todos = res?.data?.todos;
-          history.push("/todos");
+            const res = await ToDoService.createTodo(name);
+            store.user.todos = res?.data?.todos;
+            store.setToaster(true);
+            history.push("/todos");
         } catch (error) {
             console.log(error);
         }
@@ -47,6 +48,7 @@ const CreateToDo = () => {
                     />
                 </form>
                 <Button
+                    disabled={name === ''}
                     type="button"
                     fullWidth
                     onClick={() => createTodo(name)}

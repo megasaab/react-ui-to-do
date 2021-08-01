@@ -7,6 +7,7 @@ export default class Store {
     user = {};
     isAuth = false;
     isLoading = false;
+    isToaset = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -22,6 +23,10 @@ export default class Store {
 
     setLoading(bool) {
         this.isLoading = bool;
+    }
+
+    setToaster(bool) {
+        this.isToaset = bool;
     }
 
     async login(email, password) {

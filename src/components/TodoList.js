@@ -15,6 +15,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { TextField } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import CancelIcon from '@material-ui/icons/Cancel';
+import Toaster from './assets/Toaster';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -115,6 +116,7 @@ const ToDoList = () => {
 
     return (
         <div>
+            {store.isToaset ? <Toaster message={`${store.user.todos[todos?.length - 1].name} todo was created`} status={'success'} /> : ''}
             {loading ? <LoadingBar /> : ''}
             <div className={classes.title}>
                 <h1>Your Do List</h1>
