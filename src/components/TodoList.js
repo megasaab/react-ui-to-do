@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -64,6 +64,9 @@ const ToDoList = () => {
     const { store } = useContext(Context);
     const [todos, setTodos] = useState(store.user.todos);
     const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        setTodos(store.user.todos);
+    }, [store.user.todos]);
 
     const deleteTodo = async (todo) => {
         const target = Object.assign({}, todo);
@@ -108,7 +111,7 @@ const ToDoList = () => {
                                              edited: ${getCreatedDate(new Date(item?.updatedAt))}`} />
                                 </div>
                             </ListItem>
-                              <IconButton>
+                            <IconButton>
                                 <EditIcon color="primary" />
                             </IconButton>
                             <IconButton onClick={() => deleteTodo(item)}>
