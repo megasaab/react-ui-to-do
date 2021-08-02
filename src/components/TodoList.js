@@ -153,7 +153,7 @@ const ToDoList = () => {
                     </IconButton>
                 </Link>
             </div>
-            {todos?.length > 0 ? todos?.map((item, index) => {
+            {todos?.length > 0 ? todos?.sort()?.map((item, index) => {
                 return (
                     <div key={index} className={classes.ToDoList}>
                         <List className={classes.root}>
