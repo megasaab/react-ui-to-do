@@ -4,7 +4,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListIcon from '@material-ui/icons/List';
-import { Button, IconButton, MenuItem } from '@material-ui/core';
+import { IconButton, MenuItem } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -18,6 +18,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import Toaster from './assets/Toaster';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
+import { SUCCESS_TOASTER_STATUS } from './constants/toaster-status';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -130,7 +131,7 @@ const ToDoList = () => {
         setLoading(true);
         target.name = name;
         try {
-            const result = await ToDoService.editTodo(target);
+            const result = await ToDoService.editTodo(target, todos);
             setTodos(result?.data?.todos);
         } catch (error) {
             console.log(error);
@@ -142,10 +143,10 @@ const ToDoList = () => {
 
     return (
         <div>
-            {store.isToaset ? <Toaster message={`${store?.user?.todos[todos?.length - 1]?.name} todo was created`} status={'success'} /> : ''}
+            {store.isToaset ? <Toaster message={`${store?.user?.todos[todos?.length - 1]?.name} todo was created`} status={SUCCESS_TOASTER_STATUS} /> : ''}
             {loading ? <LoadingBar /> : ''}
             <div className={classes.title}>
-                <h1>Your Do List</h1>
+                <h1>Your ToDo List</h1>
                 <Link className={classes.link} to="/create-todo">
                     <IconButton color="primary">
                         <AddIcon />
