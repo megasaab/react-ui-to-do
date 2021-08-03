@@ -65,13 +65,28 @@ const ToDoList = () => {
     const [loading, setLoading] = useState(false);
 
     const removeTodo = async (target) => {
-        const result = await ToDoService.deleteTodo(target);
-        setTodos(result?.data?.todos);
+        try {
+            setLoading(true);
+            const result = await ToDoService.deleteTodo(target);
+            setTodos(result?.data?.todos);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+
     }
 
     const updateTodo = async (target) => {
-        const result = await ToDoService.editTodo(target, todos);
-        setTodos(result?.data?.todos);
+        try {
+            setLoading(true);
+            const result = await ToDoService.editTodo(target, todos);
+            setTodos(result?.data?.todos);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -83,7 +98,7 @@ const ToDoList = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [store.user.todos]);
 
-
+    
     return (
         <div>
             {store.isToaset ? <Toaster message={`${store?.user?.todos[todos?.length - 1]?.name} todo was created`} status={SUCCESS_TOASTER_STATUS} /> : ''}
@@ -96,9 +111,9 @@ const ToDoList = () => {
                     </IconButton>
                 </Link>
             </div>
-            {todos?.length > 0 ? todos?.map((item, index) => {
+            {todos?.length > 0 ? todos?.filter(item => item.isDone === false)?.map((item, index) => {
                 return (
-                    <ToDoCard key={index} item={item} updateTodo={updateTodo} removeTodo={removeTodo} setLoading={setLoading} />
+                    <ToDoCard key={index} item={item} updateTodo={updateTodo} removeTodo={removeTodo}/>
                 )
             }) : ''}
         </div>

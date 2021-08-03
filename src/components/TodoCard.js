@@ -12,6 +12,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import CancelIcon from '@material-ui/icons/Cancel';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
+import GreenRadio from '@material-ui/core/Radio';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,9 +79,12 @@ const getCreatedDate = (date) => {
     return `${monthNames[month]} ${weekDay} ${day}, ${year}: ${time}`;
 }
 
-const ToDoCard = ({item, updateTodo, removeTodo, setLoading}) => {
+const ToDoCard = ({ item, updateTodo, removeTodo }) => {
     const [isEdit, setEdit] = useState(false);
     const [name, setName] = useState(item?.name);
+    const [radioValue, setRadioValue] = useState(false);
+
+
     const classes = useStyles();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -89,34 +93,38 @@ const ToDoCard = ({item, updateTodo, removeTodo, setLoading}) => {
         setAnchorEl(event.currentTarget);
     };
 
+    const handleRadioChange = async (event) => {
+        console.log(event.target.value);
+        setRadioValue(event.target.value);
+        const target = Object.assign({}, item);
+        target.isDone = target.isDone ? false : true;
+        await updateTodo(target);
+        setRadioValue(false);
+    };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
 
     const deleteTodo = async () => {
-        setLoading(true);
         handleClose();
         const target = Object.assign({}, item);
         try {
-            removeTodo(target);
+            await removeTodo(target);
         } catch (error) {
             console.log(error);
-        } finally {
-            setLoading(false);
         }
     };
 
     const editTodo = async () => {
-        setLoading(true);
         handleClose();
         const target = Object.assign({}, item);
         target.name = name;
         try {
-            updateTodo(target)
+          await updateTodo(target)
         } catch (error) {
             console.log(error);
         } finally {
-            setLoading(false);
             setEdit(false);
         }
     }
@@ -141,6 +149,25 @@ const ToDoCard = ({item, updateTodo, removeTodo, setLoading}) => {
                         }
                     </div>
                 </ListItem>
+
+                {!item.isDone ?
+                    <GreenRadio
+                        color="default"
+                        checked={radioValue === 'true'}
+                        onChange={handleRadioChange}
+                        value={true}
+
+                    /> :
+
+                    <GreenRadio
+                        color="default"
+                        checked={radioValue === 'false'}
+                        onChange={handleRadioChange}
+                        value={false}
+
+                    />
+                }
+
                 {
                     !isEdit ?
                         '' :
@@ -154,32 +181,37 @@ const ToDoCard = ({item, updateTodo, removeTodo, setLoading}) => {
                         </div>
 
                 }
-                <div>
-                    <IconButton aria-controls="list-menu" aria-haspopup="true" onClick={handleClick}>
-                        <MoreVertIcon />
-                    </IconButton>
 
-                    <Menu
-                        id="list-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                    >
-                        <MenuItem onClick={() => setEdit(true)} className={classes.menuItems}>
-                            <EditIcon color="primary" />
-                            Edit
-                        </MenuItem>
-                        <MenuItem onClick={() => deleteTodo()} className={classes.menuItems}>
-                            <DeleteIcon color="secondary" />
-                            Delete
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                            <CancelIcon />
-                            Close
-                        </MenuItem>
-                    </Menu>
-                </div>
+                {!item.isDone ?
+                    <div>
+                        <IconButton aria-controls="list-menu" aria-haspopup="true" onClick={handleClick}>
+                            <MoreVertIcon />
+                        </IconButton>
+
+                        <Menu
+                            id="list-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            <MenuItem onClick={() => setEdit(true)} className={classes.menuItems}>
+                                <EditIcon color="primary" />
+                                Edit
+                            </MenuItem>
+                            <MenuItem onClick={() => deleteTodo()} className={classes.menuItems}>
+                                <DeleteIcon color="secondary" />
+                                Delete
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <CancelIcon />
+                                Close
+                            </MenuItem>
+                        </Menu>
+                    </div>
+                    : ''
+                }
+
             </List>
         </div>
     );

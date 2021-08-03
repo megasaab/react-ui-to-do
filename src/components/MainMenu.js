@@ -25,6 +25,8 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Box from '@material-ui/core/Box';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -34,6 +36,7 @@ import {
 } from "react-router-dom";
 import UserProfile from './UserProfile';
 import CreateToDo from './CreateTodo';
+import DoneToDo from './DoneTodo';
 
 const drawerWidth = 240;
 
@@ -230,6 +233,14 @@ const MainMenu = () => {
                             <ListItemText primary={'Todos'} />
                         </ListItem>
                     </Link>
+                    <Link className={classes.link} to="/done-todos">
+                        <ListItem button>
+                            <ListItemIcon>
+                                <AssignmentTurnedInIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={'Done todos'} />
+                        </ListItem>
+                    </Link>
                     <Divider />
                     <List>
                         <ListItem button onClick={logout}>
@@ -248,6 +259,9 @@ const MainMenu = () => {
                         </Route>
                         <Route path="/todos">
                             <ToDoList/>
+                        </Route>
+                        <Route path="/done-todos">
+                            <DoneToDo />
                         </Route>
                         <Route path="/create-todo">
                             <CreateToDo />
