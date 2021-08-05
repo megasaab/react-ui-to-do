@@ -9,6 +9,7 @@ import LoadingBar from './assets/LoadingBar';
 import Toaster from './assets/Toaster';
 import { SUCCESS_TOASTER_STATUS } from './constants/toaster-status';
 import ToDoCard from './TodoCard';
+import { Pagination } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
     menuItems: {
         display: 'flex',
-    }
+    },
 }));
 
 
@@ -63,6 +64,8 @@ const ToDoList = () => {
     const { store } = useContext(Context);
     const [todos, setTodos] = useState(store.user.todos);
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrenctPage] = useState(1);
+    const [itemPerPage] = useState(5);
 
     const removeTodo = async (target) => {
         try {
@@ -93,14 +96,21 @@ const ToDoList = () => {
 
     useEffect(() => {
         setTodos(store.user.todos);
-
         return () => {
             store.setToaster(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [store.user.todos]);
 
-    
+    const changePage = (event, page) => {
+        setCurrenctPage(page);
+    }
+
+    const indexOfLastItem = currentPage * itemPerPage;
+    const indexOfFirstElem = indexOfLastItem - itemPerPage;
+    const currentItems = todos?.slice(indexOfFirstElem, indexOfLastItem);
+
+
     return (
         <div>
             {store.isToaset ? <Toaster message={`${store?.user?.todos[todos?.length - 1]?.name} todo was created`} status={SUCCESS_TOASTER_STATUS} /> : ''}
@@ -113,11 +123,16 @@ const ToDoList = () => {
                     </IconButton>
                 </Link>
             </div>
-            {todos?.length > 0 ? todos?.filter(item => item.isDone === false)?.map((item, index) => {
+            {currentItems?.length > 0 ? currentItems?.filter(item => item.isDone === false)?.map((item, index) => {
                 return (
-                    <ToDoCard key={index} item={item} updateTodo={updateTodo} removeTodo={removeTodo}/>
+                    <ToDoCard key={index} item={item} updateTodo={updateTodo} removeTodo={removeTodo} />
                 )
             }) : ''}
+            <Pagination
+                onChange={changePage}
+                size="large"
+                count={Math.ceil(todos?.filter(item => item.isDone === false)?.length / itemPerPage)}
+                color="primary" />
         </div>
     );
 }

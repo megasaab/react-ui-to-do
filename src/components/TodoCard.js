@@ -15,6 +15,18 @@ import Menu from '@material-ui/core/Menu';
 import GreenRadio from '@material-ui/core/Radio';
 
 const useStyles = makeStyles((theme) => ({
+    conditionRoot: {
+        width: '100%',
+        maxWidth: 'auto',
+        backgroundColor: 'green',
+        borderRadius: '5px',
+        marginBottom: '1rem',
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingRight: '1rem'
+    },
+
     root: {
         width: '100%',
         maxWidth: 'auto',
@@ -134,7 +146,7 @@ const ToDoCard = ({ item, updateTodo, removeTodo }) => {
 
     return (
         <div className={classes.ToDoList}>
-            <List className={classes.root}>
+            <List className={item.isDone ? classes.conditionRoot : classes.root}>
                 <ListItem>
                     <div className={classes.items}>
                         <ListIcon className={classes.listIcon} />
