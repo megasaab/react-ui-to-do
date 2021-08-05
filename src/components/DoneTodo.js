@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '..';
 import ToDoService from '../services/ToDoService';
+import LoadingBar from './assets/LoadingBar';
 import ToDoCard from './TodoCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +17,7 @@ const DoneToDo = () => {
     const { store } = useContext(Context);
     const [todos, setTodos] = useState(store.user.todos);
     const classes = useStyles();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setTodos(store.user.todos);
@@ -29,19 +31,22 @@ const DoneToDo = () => {
 
     const updateTodo = async (target) => {
         try {
-            // setLoading(true);
+            setLoading(true);
             const result = await ToDoService.editTodo(target, todos);
             setTodos(result?.data?.todos);
+            const user = result?.data;
+            store.setUser(user);
         } catch (error) {
             console.log(error);
         } finally {
-            // setLoading(false)
+            setLoading(false)
         }
     }
 
 
     return (
         <div>
+            {loading ? <LoadingBar /> : ''}
             <div className={classes.title}>
                 <h1>Done ToDos</h1>
             </div>

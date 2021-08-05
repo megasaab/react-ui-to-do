@@ -94,7 +94,6 @@ const ToDoCard = ({ item, updateTodo, removeTodo }) => {
     };
 
     const handleRadioChange = async (event) => {
-        console.log(event.target.value);
         setRadioValue(event.target.value);
         const target = Object.assign({}, item);
         target.isDone = target.isDone ? false : true;

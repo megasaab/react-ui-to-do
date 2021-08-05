@@ -82,6 +82,8 @@ const ToDoList = () => {
             setLoading(true);
             const result = await ToDoService.editTodo(target, todos);
             setTodos(result?.data?.todos);
+            const user = result?.data;
+            store.setUser(user);
         } catch (error) {
             console.log(error);
         } finally {
