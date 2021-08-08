@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -17,6 +15,7 @@ import { Context } from '..';
 import { SUCCESS_STATUS } from './constants/http-status';
 import Toaster from './assets/Toaster';
 import { ERROR_TOASTER_STATUS } from './constants/toaster-status';
+import { i18n } from './i18n/i18n';
 
 function Copyright() {
   return (
@@ -60,6 +59,7 @@ const LoginForm = () => {
   const [toasterMessage, setToasterMessage] = useState('');
   const [registration, setRegistration] = useState(false);
   const { store } = useContext(Context);
+  const language = localStorage.getItem('lang');
 
   const login = async (email, password) => {
     const res = await store.login(email, password)
@@ -97,7 +97,7 @@ const LoginForm = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+            {i18n[language]?.signIn}
             </Typography>
             <form className={classes.form} noValidate>
               <TextField
@@ -138,12 +138,12 @@ const LoginForm = () => {
                 color="primary"
                 className={classes.submit}
               >
-                Sign In
+                {i18n[language]?.signIn}
               </Button>
               <Grid container>
                 <Grid item>
                   <Link href="#" variant="body2" onClick={() => setRegistration(true)}>
-                    Don't have an account? Sign Up
+                     {i18n[language]?.noAccount} {i18n[language]?.signUp}
                   </Link>
                 </Grid>
               </Grid>
@@ -165,7 +165,7 @@ const LoginForm = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign Up
+            {i18n[language]?.signUp}
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -206,12 +206,12 @@ const LoginForm = () => {
               color="primary"
               className={classes.submit}
             >
-              Sign Up
+             {i18n[language]?.signUp}
             </Button>
             <Grid container>
               <Grid item>
                 <Link href="#" variant="body2" onClick={() => setRegistration(false)}>
-                  Sign in
+                  {i18n[language]?.signUp}
                 </Link>
               </Grid>
             </Grid>

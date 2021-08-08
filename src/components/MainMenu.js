@@ -40,6 +40,7 @@ import UserProfile from './UserProfile';
 import CreateToDo from './CreateTodo';
 import DoneToDo from './DoneTodo';
 import { Menu, MenuItem } from '@material-ui/core';
+import { i18n } from './i18n/i18n';
 
 const drawerWidth = 240;
 
@@ -132,6 +133,7 @@ const MainMenu = () => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const { store } = useContext(Context);
+    const language = localStorage.getItem('lang');
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -151,7 +153,7 @@ const MainMenu = () => {
         return (
             <Typography variant="body2" color="textSecondary" align="center">
                 {' © '}
-                created by megasaab
+                {i18n[language]?.created} by megasaab
                 {' '}
                 {new Date().getFullYear()}
                 {'.'}
@@ -273,7 +275,7 @@ const MainMenu = () => {
                             <ListItemIcon>
                                 <ListIcon />
                             </ListItemIcon>
-                            <ListItemText primary={'Todos'} />
+                            <ListItemText primary={i18n[language]?.toDoList} />
                         </ListItem>
                     </Link>
                     <Link className={classes.link} to="/done-todos">
@@ -281,7 +283,7 @@ const MainMenu = () => {
                             <ListItemIcon>
                                 <AssignmentTurnedInIcon />
                             </ListItemIcon>
-                            <ListItemText primary={'Done todos'} />
+                            <ListItemText  primary={i18n[language]?.doneTodos} />
                         </ListItem>
                     </Link>
                     <Divider />
@@ -290,7 +292,7 @@ const MainMenu = () => {
                             <ListItemIcon>
                                 <ExitToAppIcon />
                             </ListItemIcon>
-                            <ListItemText primary={'Exit'} />
+                            <ListItemText primary={i18n[language]?.exit}  />
                         </ListItem>
                     </List>
                 </Drawer>

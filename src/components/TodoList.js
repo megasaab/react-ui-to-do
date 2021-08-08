@@ -10,6 +10,7 @@ import Toaster from './assets/Toaster';
 import { SUCCESS_TOASTER_STATUS } from './constants/toaster-status';
 import ToDoCard from './TodoCard';
 import { Pagination } from '@material-ui/lab';
+import { i18n } from './i18n/i18n';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -66,6 +67,7 @@ const ToDoList = () => {
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrenctPage] = useState(1);
     const [itemPerPage] = useState(5);
+    const language = localStorage.getItem('lang');
 
     const removeTodo = async (target) => {
         try {
@@ -116,7 +118,7 @@ const ToDoList = () => {
             {store.isToaset ? <Toaster message={`${store?.user?.todos[todos?.length - 1]?.name} todo was created`} status={SUCCESS_TOASTER_STATUS} /> : ''}
             {loading ? <LoadingBar /> : ''}
             <div className={classes.title}>
-                <h1>Your ToDo List</h1>
+                <h1>{i18n[language]?.toDoList}</h1>
                 <Link className={classes.link} to="/create-todo">
                     <IconButton color="primary">
                         <AddIcon />

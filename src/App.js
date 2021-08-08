@@ -9,6 +9,7 @@ function App() {
   const { store } = useContext(Context);
 
   useEffect(() => {
+    localStorage.setItem('lang', 'En');
     if (localStorage.getItem('token')) {
       store.checkAuth();
     }

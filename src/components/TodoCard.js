@@ -13,6 +13,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import GreenRadio from '@material-ui/core/Radio';
+import { i18n } from './i18n/i18n';
 
 const useStyles = makeStyles((theme) => ({
     conditionRoot: {
@@ -95,6 +96,7 @@ const ToDoCard = ({ item, updateTodo, removeTodo }) => {
     const [isEdit, setEdit] = useState(false);
     const [name, setName] = useState(item?.name);
     const [radioValue, setRadioValue] = useState(false);
+    const language = localStorage.getItem('lang');
 
 
     const classes = useStyles();
@@ -156,7 +158,7 @@ const ToDoCard = ({ item, updateTodo, removeTodo }) => {
                             <ListItemText
                                 primary={item?.name}
                                 secondary={
-                                    `created: ${getCreatedDate(new Date(item?.created_at))}`} />
+                                    `${i18n[language]?.created}: ${getCreatedDate(new Date(item?.created_at))}`} />
                         }
                     </div>
                 </ListItem>
@@ -208,15 +210,15 @@ const ToDoCard = ({ item, updateTodo, removeTodo }) => {
                         >
                             <MenuItem onClick={() => setEdit(true)} className={classes.menuItems}>
                                 <EditIcon color="primary" />
-                                Edit
+                                {i18n[language]?.edit}
                             </MenuItem>
                             <MenuItem onClick={() => deleteTodo()} className={classes.menuItems}>
                                 <DeleteIcon color="secondary" />
-                                Delete
+                                {i18n[language]?.delete}
                             </MenuItem>
                             <MenuItem onClick={handleClose}>
                                 <CancelIcon />
-                                Close
+                                {i18n[language]?.close}
                             </MenuItem>
                         </Menu>
                     </div>

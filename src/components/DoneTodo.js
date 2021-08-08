@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Context } from '..';
 import ToDoService from '../services/ToDoService';
 import LoadingBar from './assets/LoadingBar';
+import { i18n } from './i18n/i18n';
 import ToDoCard from './TodoCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +19,7 @@ const DoneToDo = () => {
     const [todos, setTodos] = useState(store.user.todos);
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
+    const language = localStorage.getItem('lang');
 
     useEffect(() => {
         setTodos(store.user.todos);
@@ -48,7 +50,7 @@ const DoneToDo = () => {
         <div>
             {loading ? <LoadingBar /> : ''}
             <div className={classes.title}>
-                <h1>Done ToDos</h1>
+                <h1>{i18n[language]?.doneTodos}</h1>
             </div>
             {todos?.length > 0 ? todos?.filter(item => item.isDone === true)?.map((item, index) => {
                 return (
