@@ -26,6 +26,8 @@ import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Box from '@material-ui/core/Box';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import GTranslateIcon from '@material-ui/icons/GTranslate';
+import PublicIcon from '@material-ui/icons/Public';
 
 import {
     BrowserRouter as Router,
@@ -37,6 +39,7 @@ import {
 import UserProfile from './UserProfile';
 import CreateToDo from './CreateTodo';
 import DoneToDo from './DoneTodo';
+import { Menu, MenuItem } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -116,6 +119,10 @@ const useStyles = makeStyles((theme) => ({
     },
     spaceBetween: {
         justifyContent: 'space-between'
+    },
+    formControlEn: {
+        alignItems: 'center',
+        display: 'flex'
     }
 
 }));
@@ -152,6 +159,23 @@ const MainMenu = () => {
         );
     }
 
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const selectLang = (event) => {
+        setAnchorEl(event.currentTarget);
+    }
+
+    const changeLang = (lang) => {
+        setAnchorEl(null);
+        store.setLanguage(lang);
+        localStorage.setItem('lang', store.lang);
+    }
+
     return (
         <Router>
             <div className={classes.root}>
@@ -176,7 +200,26 @@ const MainMenu = () => {
                         </IconButton>
                         <Typography variant="h6" noWrap>
                         </Typography>
-                        <div>
+                        <div className={classes.formControlEn}>
+                            <IconButton color="inherit" aria-controls="lang-menu" aria-haspopup="true" onClick={selectLang}>
+                                <GTranslateIcon />
+                            </IconButton>
+                            <Menu
+                                id="lang-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={() => changeLang('En')}>
+                                    <PublicIcon color="primary" />
+                                    En
+                                </MenuItem>
+                                <MenuItem onClick={() => changeLang('Ru')}>
+                                    <PublicIcon color="secondary" />
+                                    Ru
+                                </MenuItem>
+                            </Menu>
                             <IconButton
                                 onClick={() => window.open("https://github.com/megasaab", '_blank')}
                                 color="inherit"
@@ -258,7 +301,7 @@ const MainMenu = () => {
                             <UserProfile />
                         </Route>
                         <Route path="/todos">
-                            <ToDoList/>
+                            <ToDoList />
                         </Route>
                         <Route path="/done-todos">
                             <DoneToDo />

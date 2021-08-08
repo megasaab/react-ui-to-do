@@ -8,6 +8,7 @@ export default class Store {
     isAuth = false;
     isLoading = false;
     isToaset = false;
+    lang = 'En';
 
     constructor() {
         makeAutoObservable(this);
@@ -27,6 +28,10 @@ export default class Store {
 
     setToaster(bool) {
         this.isToaset = bool;
+    }
+
+    setLanguage(lang) {
+        this.lang = lang;
     }
 
     async login(email, password) {
