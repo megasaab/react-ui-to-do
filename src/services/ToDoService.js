@@ -15,5 +15,9 @@ export default class ToDoService {
     static async editTodo(todo, todos) {
         return $api.post('/edit-todo', {todo, todos});
     }
+
+    static async getTodosByDate(date) {
+        return $api.post('get-todo-by-date', {date})
+    }
         
 }

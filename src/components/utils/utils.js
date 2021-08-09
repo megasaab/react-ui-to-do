@@ -1,7 +1,7 @@
 function pad2(n) {
     return (n < 10 ? '0' : '') + n;
 }
-
+// get current date in YYYY-MM-mm
 export function getTodayDate() {
     const date = new Date();
     const month = pad2(date.getMonth() + 1);//months (0-11)
