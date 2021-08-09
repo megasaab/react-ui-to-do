@@ -9,7 +9,8 @@ export const i18n = {
         exit: 'Exit',
         signIn: 'Sign In',
         signUp: 'Sign Up',
-        noAccount: 'Dont have an account?'
+        noAccount: 'Dont have an account?',
+        choseDate: 'Chose Date'
     },
 
     Ru: {
@@ -22,7 +23,8 @@ export const i18n = {
         exit: 'Выход',
         signIn: 'Войти',
         signUp: 'Зарегистрироваться',
-        noAccount: 'Вы еще не зарегестрированы?'
+        noAccount: 'Вы еще не зарегестрированы?',
+        choseDate: 'Выберите дату'
     }
 
 }

@@ -11,6 +11,7 @@ import { SUCCESS_TOASTER_STATUS } from './constants/toaster-status';
 import ToDoCard from './TodoCard';
 import { Pagination } from '@material-ui/lab';
 import { i18n } from './i18n/i18n';
+import Datepicker from './assets/Datepicker';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -108,6 +109,10 @@ const ToDoList = () => {
         setCurrenctPage(page);
     }
 
+    const setDate = (elem) => {
+        console.log(elem);
+    }
+
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstElem = indexOfLastItem - itemPerPage;
     const currentItems = todos?.slice(indexOfFirstElem, indexOfLastItem);
@@ -119,6 +124,7 @@ const ToDoList = () => {
             {loading ? <LoadingBar /> : ''}
             <div className={classes.title}>
                 <h1>{i18n[language]?.toDoList}</h1>
+                <Datepicker setDate={setDate}/>
                 <Link className={classes.link} to="/create-todo">
                     <IconButton color="primary">
                         <AddIcon />
