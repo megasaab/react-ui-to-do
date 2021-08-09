@@ -108,9 +108,17 @@ const ToDoList = () => {
     const changePage = (event, page) => {
         setCurrenctPage(page);
     }
-
-    const setDate = (elem) => {
-        console.log(elem);
+    // get todos by chisen date
+    const setDate = async (date) => {
+        try {
+            setLoading(true);
+            const result = await ToDoService.getTodosByDate(date);
+            setTodos(result?.data?.todos);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
+        }
     }
 
     const indexOfLastItem = currentPage * itemPerPage;
@@ -122,9 +130,10 @@ const ToDoList = () => {
         <div>
             {store.isToaset ? <Toaster message={`${store?.user?.todos[todos?.length - 1]?.name} todo was created`} status={SUCCESS_TOASTER_STATUS} /> : ''}
             {loading ? <LoadingBar /> : ''}
+
+            <Datepicker setDate={setDate} />
             <div className={classes.title}>
                 <h1>{i18n[language]?.toDoList}</h1>
-                <Datepicker setDate={setDate}/>
                 <Link className={classes.link} to="/create-todo">
                     <IconButton color="primary">
                         <AddIcon />
