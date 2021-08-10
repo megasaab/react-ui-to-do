@@ -17,7 +17,7 @@ export default class ToDoService {
     }
 
     static async getTodosByDate(date) {
-        return $api.post('get-todo-by-date', {date});
+        return $api.post('/get-todo-by-date', {date});
     }
         
 }

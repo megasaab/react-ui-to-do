@@ -82,7 +82,7 @@ const getCreatedDate = (date) => {
     const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday"];
 
-    const month = date.getUTCMonth() + 1; //months from 1-12
+    const month = date.getUTCMonth(); //months from 1-12
     const day = date.getUTCDate();
     const year = date.getUTCFullYear();
     const time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
