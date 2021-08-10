@@ -28,6 +28,7 @@ import Box from '@material-ui/core/Box';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import GTranslateIcon from '@material-ui/icons/GTranslate';
 import PublicIcon from '@material-ui/icons/Public';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 
 import {
     BrowserRouter as Router,
@@ -41,6 +42,7 @@ import CreateToDo from './CreateTodo';
 import DoneToDo from './DoneTodo';
 import { Menu, MenuItem } from '@material-ui/core';
 import { i18n } from './i18n/i18n';
+import CovidStat from './CovidStat';
 
 const drawerWidth = 240;
 
@@ -286,6 +288,14 @@ const MainMenu = () => {
                             <ListItemText  primary={i18n[language]?.doneTodos} />
                         </ListItem>
                     </Link>
+                    <Link className={classes.link} to="/covid-stat">
+                        <ListItem button>
+                            <ListItemIcon>
+                                <EqualizerIcon />
+                            </ListItemIcon>
+                            <ListItemText  primary={i18n[language]?.statistic} />
+                        </ListItem>
+                    </Link>
                     <Divider />
                     <List>
                         <ListItem button onClick={logout}>
@@ -307,6 +317,9 @@ const MainMenu = () => {
                         </Route>
                         <Route path="/done-todos">
                             <DoneToDo />
+                        </Route>
+                        <Route path="/covid-stat">
+                            <CovidStat />
                         </Route>
                         <Route path="/create-todo">
                             <CreateToDo />
