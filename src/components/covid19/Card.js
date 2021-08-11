@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Cards = ({ data }) => {
-    console.log(data);
     const classes = useStyles();
     const language = localStorage.getItem('lang');
 
