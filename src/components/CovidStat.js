@@ -22,20 +22,28 @@ const useStyles = makeStyles((theme) => ({
 const CovidStat = () => {
     const classes = useStyles();
     const [data, setData] = useState({});
+    const [country, setCountry] = useState('');
+
     useEffect(() => {
         async function fetchMyAPI() {
           const response = await CovidService.getAll();
-          setData(response)
+          setData(response);
         }
     
         fetchMyAPI();
       }, [])
 
+    const handleCountryChange = async (country) => {
+        const response = await CovidService.getAll(country);
+        setCountry(country);
+        setData(response)
+    }
+
     return (
         <div className={classes.container}>
             <Cards data={data}/>
-            <CountryPicker />
-            <Chart />
+            <CountryPicker handleCountryChange={handleCountryChange} />
+            <Chart data={data} country={country}/>
         </div>
     )
 }
