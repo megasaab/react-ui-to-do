@@ -1,6 +1,7 @@
 import axios from 'axios';
 export const BASE_API_URL = `https://backend.megasaab98.com/api`;
 export const BASE_COVID19_API= `https://covid19.mathdro.id/api`;
+export const GITHUB_URL = `https://api.github.com`;
 
 const $api = axios.create({
     baseURL: BASE_API_URL,

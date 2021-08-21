@@ -43,7 +43,7 @@ import DoneToDo from './DoneTodo';
 import { Menu, MenuItem } from '@material-ui/core';
 import { i18n } from './i18n/i18n';
 import CovidStat from './CovidStat';
-import Github from './Github';
+import Github from './github/Github';
 
 const drawerWidth = 240;
 

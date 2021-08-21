@@ -20,7 +20,8 @@ export const i18n = {
         recovered: 'Recovered',
         death: 'Death',
         numOfDeath: 'Number of death from COVID-19',
-        github: 'Github'
+        github: 'Github',
+        searchGithubUser: 'Search user'
     },
 
     Ru: {
@@ -44,7 +45,8 @@ export const i18n = {
         recovered: 'Выздоровевшие',
         death: 'Смертей',
         numOfDeath: 'Колл-во смертей от COVID-19',
-        github: 'Github'
+        github: 'Github',
+        searchGithubUser: 'Найдите пользователя'
     }
 
 }
