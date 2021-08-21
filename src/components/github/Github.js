@@ -45,7 +45,6 @@ const Github = () => {
     }, []);
 
     const handleSearch = async () => {
-        setToaster(true);
         const searchOptions = user ? `/${user}` : '';
         try {
             store.setLoading(true);
@@ -54,12 +53,11 @@ const Github = () => {
                 setUsers(result?.data);
                 console.log(userList)
             }
-            setToasterMessage('Success!');
         } catch (err) {
+            setToaster(true);
             setStatus(ERROR_TOASTER_STATUS);
-            setToasterMessage('Fail!')
+            setToasterMessage(err?.message);
         } finally {
-            setToaster(false);
             store.setLoading(false);
         };
     };
