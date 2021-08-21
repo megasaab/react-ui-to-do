@@ -23,12 +23,12 @@ import ToDoList from './TodoList';
 import ListIcon from '@material-ui/icons/List';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import GitHubIcon from '@material-ui/icons/GitHub';
 import Box from '@material-ui/core/Box';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import GTranslateIcon from '@material-ui/icons/GTranslate';
 import PublicIcon from '@material-ui/icons/Public';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 import {
     BrowserRouter as Router,
@@ -43,6 +43,7 @@ import DoneToDo from './DoneTodo';
 import { Menu, MenuItem } from '@material-ui/core';
 import { i18n } from './i18n/i18n';
 import CovidStat from './CovidStat';
+import Github from './Github';
 
 const drawerWidth = 240;
 
@@ -296,6 +297,14 @@ const MainMenu = () => {
                             <ListItemText  primary={i18n[language]?.statistic} />
                         </ListItem>
                     </Link>
+                    <Link className={classes.link} to="/github-info">
+                        <ListItem button>
+                            <ListItemIcon>
+                                <GitHubIcon />
+                            </ListItemIcon>
+                            <ListItemText  primary={i18n[language]?.githab} />
+                        </ListItem>
+                    </Link>
                     <Divider />
                     <List>
                         <ListItem button onClick={logout}>
@@ -320,6 +329,9 @@ const MainMenu = () => {
                         </Route>
                         <Route path="/covid-stat">
                             <CovidStat />
+                        </Route>
+                        <Route path="/github-info">
+                            <Github />
                         </Route>
                         <Route path="/create-todo">
                             <CreateToDo />
