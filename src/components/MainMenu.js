@@ -302,7 +302,7 @@ const MainMenu = () => {
                             <ListItemIcon>
                                 <GitHubIcon />
                             </ListItemIcon>
-                            <ListItemText  primary={i18n[language]?.githab} />
+                            <ListItemText  primary={i18n[language]?.github} />
                         </ListItem>
                     </Link>
                     <Divider />

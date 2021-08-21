@@ -1,4 +1,4 @@
-import { IconButton, makeStyles, TextField } from "@material-ui/core";
+import { Avatar, IconButton, makeStyles, TextField } from "@material-ui/core";
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from "react";
 import SearchIcon from '@material-ui/icons/Search';
 import $api, { GITHUB_URL } from "../../http/https";
 import axios from "axios";
-import { SUCCESS_TOASTER_STATUS } from "../constants/toaster-status";
+import { ERROR_TOASTER_STATUS, SUCCESS_TOASTER_STATUS } from "../constants/toaster-status";
 import Toaster from "../assets/Toaster";
 import { Context } from "../..";
 import LoadingBar from "../assets/LoadingBar";
@@ -39,19 +39,28 @@ const Github = () => {
     const [status, setStatus] = useState(SUCCESS_TOASTER_STATUS);
     const { store } = useContext(Context);
 
+    useEffect(() => {
+        store.setLoading(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const handleSearch = async () => {
         setToaster(true);
         const searchOptions = user ? `/${user}` : '';
         try {
             store.setLoading(true);
             const result = await axios.get(`${GITHUB_URL}/${searchEndpoint}${searchOptions}`);
+            if (result?.data?.length > 0) {
+                setUsers(result?.data);
+                console.log(userList)
+            }
             setToasterMessage('Success!');
-            store.setLoading(false);
         } catch (err) {
+            setStatus(ERROR_TOASTER_STATUS);
             setToasterMessage('Fail!')
         } finally {
             setToaster(false);
-            setUserInput('');
+            store.setLoading(false);
         };
     };
 
@@ -75,11 +84,20 @@ const Github = () => {
                 />
                 <IconButton
                     color="inherit"
-                    onClick={handleSearch}
+                    onClick={() => handleSearch()}
                 >
                     <SearchIcon fontSize='large' />
                 </IconButton>
             </div>
+
+            {userList?.map((item, index) => {
+                return (
+                    <div key={index} className={classes.center}>
+                        <Avatar alt="avatar" src={item?.avatar_url} />
+                        <span>{item?.login}</span>
+                    </div>
+                )
+            })}
         </div>
     )
 }
